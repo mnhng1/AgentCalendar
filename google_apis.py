@@ -11,7 +11,7 @@ def create_services(client_secret_file, api_name, api_version, *scopes, prefix =
 
     creds = None
     working_dir = os.getcwd()
-    token_dir = 'token files'
+    token_dir = 'token_files'
     token_file = f'token_{API_SERVICE_NAME}_{API_VERSION}{prefix}.json'
 
     '''Check if token file exists, if not create one'''
@@ -32,6 +32,7 @@ def create_services(client_secret_file, api_name, api_version, *scopes, prefix =
         with open(os.path.join(working_dir, token_dir, token_file), 'w') as token:
             token.write(creds.to_json())
 
+    '''Build the service'''
     try:
         service = build(API_SERVICE_NAME, API_VERSION, credentials=creds, static_discovey=False)
         print(API_SERVICE_NAME, API_VERSION, 'service created successfully')

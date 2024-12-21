@@ -1,8 +1,5 @@
 import textwrap 
 
-main_agent_system_prompt = textwrap.dedent("""
-    You are a main agent. For calendar related tasks, transfer to Google Calendar Agent first. 
-""")
 
 calendar_agent_system_prompt = textwrap.dedent("""
     You are a helpful agent who is equipped with a variety of Google Calendar functions to handle Google calendar related tasks.

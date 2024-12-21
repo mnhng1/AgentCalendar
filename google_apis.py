@@ -2,6 +2,7 @@ import os
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
 
 def create_services(client_secret_file, api_name, api_version, *scopes, prefix =''):
     CLIENT_SECRET_FILE = client_secret_file
@@ -34,11 +35,11 @@ def create_services(client_secret_file, api_name, api_version, *scopes, prefix =
 
     '''Build the service'''
     try:
-        service = build(API_SERVICE_NAME, API_VERSION, credentials=creds, static_discovey=False)
+        service = build(API_SERVICE_NAME, API_VERSION, credentials=creds, static_discovery=False)
         print(API_SERVICE_NAME, API_VERSION, 'service created successfully')
         return service
     except Exception as e:
         print(e)
         print(f'Failed to connect to the {API_SERVICE_NAME} service')
-        os.remove(o.path.join(working_dir, token_dir, token_file))
+        os.remove(os.path.join(working_dir, token_dir, token_file))
         return None

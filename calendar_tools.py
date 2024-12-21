@@ -74,7 +74,7 @@ def list_calendar_list(max_capacity=200):
         calendar_info = {
             'id': calendar['id'],
             'name': calendar['summary'],
-            'description': calendar['description']
+            'description': calendar.get('description', 'No description')
         }
         all_calendars_cleaned.append(calendar_info)
     
@@ -97,20 +97,23 @@ def list_calendar_events(calendar_id='primary', max_capacity=10):
     all_events = []
     next_page_token = None
     capacity_count = 0
-
+    
     while True:
-        events = calendar_service.events().list(
+        events_list = calendar_service.events().list(
             calendarId=calendar_id,
             maxResults=min(200, max_capacity - capacity_count),
             pageToken = next_page_token
         ).execute()
-        events = events.get('items', [])
+
+        events = events_list.get('items', [])
         all_events.extend(events)
+        capacity_count += len(events)
         if capacity_count >= max_capacity:
             break
-        next_page_token = events.get('nextPageToken')
+        next_page_token = events_list.get('nextPageToken')
         if not next_page_token:
             break
+        
     
     return all_events
 
@@ -126,6 +129,6 @@ def insert_calendar_event(calendar_id, **event_details):
         event: dict - The created event.
     """
     request_body = json.loads(event_details['event_details'])
-    event = create_calendar_list.events().insert(calendarId = calendar_id, body = request_body).execute()
+    event = calendar_service.events().insert(calendarId = calendar_id, body = request_body).execute()
     print('Event created: %s' % (event.get('htmlLink')))
     return event

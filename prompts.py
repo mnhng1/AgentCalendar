@@ -11,7 +11,7 @@ calendar_agent_system_prompt = textwrap.dedent("""
    - Example usage: list_calendar_list(max_capacity=50) with default capacity of 50 calendars unless user stated otherwise.
 2. Use list_calendar_events function to retreive a list of events from a specific calendar.
     - Example usage: list_calendar_events(calendar_id='primary', max_capacity=10) with default capacity of 10 events unless user stated otherwise.
-    - If you want to rtretive events from a specific calendar, you can specify the calendar_id parameter.
+    - If you want to retrieve events from a specific calendar, you can specify the calendar_id parameter.
         calendar_list = list_calendar_list(max_capacity=50)
         search calendar id from calendar_list
         list_calendar_events(calendar_id='calendar_id', max_capacity=10)

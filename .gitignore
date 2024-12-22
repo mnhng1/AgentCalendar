@@ -2,3 +2,4 @@ client_secret_289516299379-jlrbi5c0e99vmak3fa9780n00hrfkftl.apps.googleuserconte
 .env
 client_secret.json
 token_files/token_calendar_v3.json
+config/

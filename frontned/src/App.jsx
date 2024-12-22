@@ -1,18 +1,20 @@
 
 import './App.css'
-import GoogleLoginButton from './components/GoogleLoginButtion'
-import { GoogleOAuthProvider } from '@react-oauth/google'
-import { BrowserRouter } from 'react-router-dom'
-function App() {
- 
 
+import { GoogleOAuthProvider } from '@react-oauth/google'
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import Dashboard from './components/Dashboard'
+import Home from './components/HomePage/Home'
+
+
+function App() {
   return (
     <BrowserRouter>
       <GoogleOAuthProvider clientId="289516299379-aiv4tfh8p9l76g35sqqflos92jup60fj.apps.googleusercontent.com">
-      <div className='flex items-center justify-center'> 
-        Home
-        <GoogleLoginButton/>
-      </div>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
+      </Routes>
       </GoogleOAuthProvider>
     </BrowserRouter>
     

@@ -1,4 +1,6 @@
-from oauth2client import client
+from google_auth_oauthlib.flow import Flow
+from google.oauth2.credentials import Credentials
+from pathlib import Path
 import os
 from dotenv import load_dotenv
 
@@ -7,37 +9,21 @@ load_dotenv()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'config', 'client_secret.json')
 
-
-def get_id_token_with_code_method_1(code):
+def get_credentials_with_code(code):
     """
-        Get the id token with the code from the user.
-    
+    Exchange authorization code for credentials.
+
     Parameters:
-        code: str - The code from the user.
-    
+        code: str - The authorization code received from Google.
+
     Returns:
-        id_token: str - The id token of the user.
+        credentials: Credentials object containing access and refresh tokens.
     """
-    credentials = client.credentials_from_clientsecrets_and_code(
+    flow = Flow.from_client_secrets_file(
         CLIENT_SECRET_FILE,
-        ['profile',  'email', 'https://www.googleapis.com/auth/calendar'],
-        code
+        scopes=['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
+        redirect_uri="postmessage"  # Ensure this matches your OAuth client settings
     )
-    id_token = credentials.id_token
-    print(id_token)
-    return id_token
-
-
-
-def get_id_token_with_code_method_2(code):
-    token_endpoint = 'https://oauth2.googleapis.com/token'
-    payload = {
-        'code':code,
-        'client_id': os.getenv('CLIENT_ID'),
-        'client_secret': os.getenv('CLIENT_SECRET'),
-        'grant_type':'authorization_code',
-        'redirect_uri':'postmessage'
-    }
-
-    body = json.dumps(payload)
-    headers = {'Content-Type': 'application/json'}
+    flow.fetch_token(code=code)
+    credentials = flow.credentials
+    return credentials

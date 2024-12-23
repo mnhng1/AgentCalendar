@@ -1,0 +1,27 @@
+
+.gradient-border {
+  display: inline-block;
+  padding: 4px; /* Adjust the padding to control the border width */
+  border-radius: 4px; /* Adjust the border radius to match the button */
+  background: linear-gradient(45deg, #1d46ff, #73bdf5, #d8ff6e, #f35405, #f30505 ); /* Gradient background */
+  background-size: 400% 400%;
+  animation: gradient-animation 6s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-border .flex {
+  background: white; /* Background color of the button */
+  border-radius: 4px; /* Adjust the border radius to match the button */
+  padding: 0px; /* Adjust the padding to control the inner spacing */
+}

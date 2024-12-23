@@ -2,7 +2,7 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import GoogleButton from "react-google-button";
 import { useNavigate } from 'react-router-dom'
-
+import './GoogleLoginButton.css' 
 const GoogleLoginButton = () => {
   const navigate = useNavigate()
   const handleSuccess = async (codeResponse) => {
@@ -24,6 +24,8 @@ const GoogleLoginButton = () => {
 
         localStorage.setItem('access_token', access_token)
         localStorage.setItem('user_name', user_name)
+
+        navigate('/dashboard')
     } catch (error) {
         console.log(error)
         alert('Login failed')
@@ -41,9 +43,10 @@ const GoogleLoginButton = () => {
   });
 
   return (
-    <div className="flex items-center justify-center">
-      {/* <button onClick={() => login()}>Sign in with Google 🚀</button> */}
-      <GoogleButton onClick={login} label="Sign in with Google 🚀" />
+    <div className="gradient-border">
+      <div className="flex items-center justify-center">
+        <GoogleButton onClick={login} label="Sign in with Google 🚀" />
+      </div>
     </div>
   );
 };
